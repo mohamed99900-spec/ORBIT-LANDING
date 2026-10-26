@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080914">
+  <meta name="description" content="ORBIT — نبني تجارب رقمية استثنائية ونحوّل أفكارك إلى منتجات تقنية مميزة.">
+  <title>ORBIT — نصنع المستقبل الرقمي</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080914;
+      --surface: #101121;
+      --surface2: #15162b;
+      --text: #f4f3ff;
+      --muted: #999ab8;
+      --line: rgba(255,255,255,.09);
+      --purple: #9874ff;
+      --blue: #52baff;
+      --pink: #eb86f5;
+      --green: #5be0b0;
+      --header: rgba(8,9,20,.78);
+      --container: 1160px;
+      --radius: 22px;
+      --shadow: 0 20px 80px rgba(0,0,0,.28);
+    }
+
+    body.light {
+      color-scheme: light;
+      --bg: #f7f7fc;
+      --surface: #fff;
+      --surface2: #efeffb;
+      --text: #17172d;
+      --muted: #686981;
+      --line: rgba(35,35,80,.12);
+      --header: rgba(247,247,252,.86);
+      --shadow: 0 20px 65px rgba(41,35,100,.10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Cairo", sans-serif;
+      line-height: 1.8;
+      overflow-x: hidden;
+      transition: background .3s, color .3s;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      top: -250px;
+      right: -170px;
+      background: #7651ff;
+      filter: blur(180px);
+      opacity: .12;
+      pointer-events: none;
+      z-index: -1;
+    }
+    button, input, textarea, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button:focus-visible, a:focus-visible, input:focus-visible,
+    textarea:focus-visible, select:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 4px;
+    }
+    ::selection { background: var(--purple); color: white; }
+
+    .container { width: min(var(--container), calc(100% - 40px)); margin-inline: auto; }
+    .muted { color: var(--muted); }
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(100deg, var(--blue), var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .section { padding: 100px 0; position: relative; }
+    .section-heading { max-width: 680px; margin: 0 auto 48px; text-align: center; }
+    .section-heading h2 { font-size: clamp(27px,4vw,43px); line-height: 1.5; margin: 12px 0; }
+    .section-heading p { color: var(--muted); font-size: 14px; margin: 0 auto; max-width: 560px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 6px 12px; border: 1px solid var(--line);
+      background: var(--surface); border-radius: 100px;
+      font-size: 11px; font-weight: 800; color: var(--blue);
+    }
+    .eyebrow-dot {
+      width: 7px; height: 7px; background: var(--green);
+      border-radius: 50%; box-shadow: 0 0 12px var(--green);
+    }
+    .btn {
+      border: 1px solid transparent; border-radius: 12px;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px; padding: 13px 21px; font-size: 13px;
+      font-weight: 800; transition: transform .22s, box-shadow .22s, background .22s;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-primary {
+      color: white;
+      background: linear-gradient(110deg,#7753f4,#9874ff 55%,#648cff);
+      box-shadow: 0 8px 30px #7958ff30;
+    }
+    .btn-primary:hover { box-shadow: 0 12px 40px #7958ff55; }
+    .btn-secondary {
+      color: var(--text); border-color: var(--line); background: var(--surface);
+    }
+    .btn-secondary:hover { border-color: var(--purple); }
+    .btn-block { width: 100%; }
+    .icon-btn {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      border: 1px solid var(--line); background: var(--surface);
+      color: var(--text); border-radius: 12px; transition: .2s;
+    }
+    .icon-btn:hover { border-color: var(--purple); color: var(--blue); }
+
+    /* Navigation */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--header); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-symbol {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      border-radius: 14px; font-size: 22px; color: white;
+      background: linear-gradient(135deg,#7956f5,#50bfff);
+      box-shadow: 0 0 28px #7956f540;
+    }
+    .brand-name { font-weight: 900; font-size: 21px; letter-spacing: 2px; line-height: 1.3; }
+    .brand-sub { display: block; font-size: 9px; letter-spacing: 2.6px; color: var(--muted); font-weight: 700; }
+    .nav-links { display: flex; align-items: center; gap: 27px; font-size: 12px; font-weight: 700; }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-actions { display: flex; gap: 8px; align-items: center; }
+    .menu-toggle { display: none; }
+
+    /* Hero */
+    .hero { min-height: 650px; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 45px; padding-top: 70px; padding-bottom: 75px; }
+    .hero-copy { position: relative; z-index: 2; }
+    .hero h1 { font-size: clamp(39px,5.3vw,67px); line-height: 1.35; letter-spacing: -1.5px; margin: 24px 0 18px; font-weight: 900; }
+    .hero-description { color: var(--muted); max-width: 525px; font-size: 14px; line-height: 2.1; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .hero-proof { display: flex; align-items: center; gap: 13px; margin-top: 35px; }
+    .avatar-stack { display: flex; direction: ltr; padding-left: 6px; }
+    .avatar {
+      width: 34px; height: 34px; margin-left: -7px; border: 2px solid var(--bg);
+      border-radius: 50%; display: grid; place-items: center;
+      background: linear-gradient(135deg,#3d477a,#9d72e7); font-size: 11px; color: white;
+    }
+    .proof-stars { color: #f7c66a; font-size: 10px; }
+    .proof-text { font-size: 11px; color: var(--muted); }
+    .proof-text strong { display: block; color: var(--text); font-size: 12px; }
+
+    .hero-art { position: relative; min-height: 460px; display: grid; place-items: center; isolation: isolate; }
+    .orbit-glow {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      background: #7754f5; filter: blur(100px); opacity: .26; z-index: -2;
+    }
+    .orbit-ring {
+      position: absolute; width: 390px; height: 390px; border-radius: 50%;
+      border: 1px solid #9a82ff38; transform: rotate(-28deg) scaleY(.67);
+      animation: spin 22s linear infinite;
+    }
+    .orbit-ring::before {
+      content: ""; position: absolute; top: 50%; left: -7px; width: 14px; height: 14px;
+      border-radius: 50%; background: var(--blue); box-shadow: 0 0 22px var(--blue);
+    }
+    .orbit-ring.ring-two { width: 310px; height: 310px; transform: rotate(40deg) scaleY(.7); animation-duration: 17s; animation-direction: reverse; border-color: #50bfff30; }
+    .orbit-ring.ring-two::before { background: var(--pink); box-shadow: 0 0 20px var(--pink); top: 12%; left: 22%; }
+    @keyframes spin { to { rotate: 360deg; } }
+
+    .dashboard {
+      width: min(100%,400px); padding: 18px; border-radius: 22px;
+      border: 1px solid #ffffff20; background: linear-gradient(145deg,#1a1b32ee,#101121f2);
+      box-shadow: 0 30px 90px #0007, inset 0 1px #ffffff12;
+      transform: perspective(900px) rotateY(5deg) rotateX(2deg);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+    .dashboard-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #ffffff12; }
+    .dash-dots { display: flex; gap: 5px; direction: ltr; }
+    .dash-dots i { width: 7px; height: 7px; border-radius: 50%; background: #ec737b; }
+    .dash-dots i:nth-child(2) { background: #f2c16a; }
+    .dash-dots i:nth-child(3) { background: #55d5a4; }
+    .dash-label { color: #a5a6c1; font-size: 10px; }
+    .dash-value { font-size: 27px; font-weight: 900; margin-top: 12px; }
+    .dash-change { color: var(--green); font-size: 10px; }
+    .chart { height: 130px; margin: 15px 0; display: flex; align-items: end; gap: 8px; padding: 8px 2px; border-bottom: 1px solid #ffffff12; }
+    .chart span { flex: 1; border-radius: 5px 5px 0 0; min-width: 0; background: linear-gradient(0deg,#7955ef,#6dc8ff); opacity: .85; animation: grow .8s ease both; transform-origin: bottom; }
+    @keyframes grow { from { transform: scaleY(.1); } to { transform: scaleY(1); } }
+    .dash-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .dash-mini { padding: 12px; background: #ffffff08; border: 1px solid #ffffff0d; border-radius: 12px; }
+    .dash-mini i { color: var(--blue); font-size: 12px; }
+    .dash-mini strong { display: block; font-size: 17px; margin-top: 5px; }
+    .dash-mini small { color: #999ab8; font-size: 9px; }
+    .float-card {
+      position: absolute; padding: 13px 16px; border-radius: 14px;
+      background: var(--surface); border: 1px solid var(--line);
+      box-shadow: var(--shadow); font-size: 11px; z-index: 3;
+    }
+    .float-card i { color: var(--green); margin-left: 7px; }
+    .float-one { top: 65px; right: -4px; animation: float 5s ease-in-out infinite; }
+    .float-two { bottom: 52px; left: -10px; animation: float 7s ease-in-out infinite reverse; }
+
+    /* Metrics */
+    .metrics { border-block: 1px solid var(--line); background: var(--surface); }
+    .metrics-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+    .metric { text-align: center; padding: 30px 15px; border-left: 1px solid var(--line); }
+    .metric:last-child { border-left: 0; }
+    .metric strong { display: block; font-size: 30px; font-weight: 900; }
+    .metric span { font-size: 11px; color: var(--muted); }
+
+    /* Features */
+    .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .feature-card {
+      position: relative; padding: 27px; min-height: 225px;
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .feature-card::after {
+      content: ""; position: absolute; width: 150px; height: 150px; border-radius: 50%;
+      background: var(--purple); filter: blur(90px); opacity: 0; top: -70px; left: -60px; transition: opacity .3s;
+    }
+    .feature-card:hover { transform: translateY(-6px); border-color: #9874ff70; box-shadow: var(--shadow); }
+    .feature-card:hover::after { opacity: .2; }
+    .feature-icon {
+      width: 49px; height: 49px; display: grid; place-items: center;
+      border-radius: 15px; color: var(--blue); font-size: 19px;
+      background: linear-gradient(135deg,#6b55f522,#55bfff20);
+      border: 1px solid #8a76ff30;
+    }
+    .feature-card h3 { margin: 19px 0 8px; font-size: 16px; }
+    .feature-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 2; }
+
+    /* Workflow */
+    .workflow { background: var(--surface); border-block: 1px solid var(--line); }
+    .workflow-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+    .step { position: relative; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--bg); }
+    .step-number { font: 900 30px Georgia,serif; color: var(--purple); opacity: .9; }
+    .step h3 { font-size: 15px; margin: 12px 0 5px; }
+    .step p { color: var(--muted); font-size: 11px; margin: 0; }
+
+    /* Pricing */
+    .pricing-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 13px;
+      margin: -15px auto 32px; font-size: 12px; color: var(--muted);
+    }
+    .switch { width: 48px; height: 27px; border-radius: 30px; border: 0; background: var(--purple); padding: 3px; }
+    .switch-knob { display: block; width: 21px; height: 21px; border-radius: 50%; background: white; transition: transform .2s; }
+    .switch[aria-checked="true"] .switch-knob { transform: translateX(-21px); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; align-items: stretch; }
+    .price-card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; }
+    .price-card.popular { border-color: var(--purple); box-shadow: 0 0 40px #7958ff16; position: relative; }
+    .popular-label { display: inline-block; align-self: flex-start; border-radius: 100px; background: #7958ff25; color: var(--blue); padding: 5px 11px; font-size: 10px; font-weight: 800; }
+    .price-card h3 { font-size: 18px; margin: 14px 0 5px; }
+    .price-card > p { font-size: 11px; color: var(--muted); min-height: 42px; margin: 0; }
+    .price { font-size: 35px; font-weight: 900; margin: 20px 0; line-height: 1.4; }
+    .price small { font-size: 11px; font-weight: 500; color: var(--muted); }
+    .price-card ul { padding: 0; margin: 0 0 24px; list-style: none; display: grid; gap: 11px; flex: 1; }
+    .price-card li { font-size: 11px; display: flex; gap: 9px; align-items: center; }
+    .price-card li i { color: var(--green); }
+    .price-card .btn { width: 100%; }
+
+    /* Testimonials */
+    .testimonials { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .quote-card { padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+    .quote-stars { color: #f4c46b; font-size: 11px; }
+    .quote-card blockquote { margin: 16px 0 20px; font-size: 12px; line-height: 2.1; color: var(--muted); }
+    .quote-person { display: flex; align-items: center; gap: 11px; }
+    .quote-avatar { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg,#7753f4,#52baff); color: white; font-weight: 900; }
+    .quote-person strong { display: block; font-size: 11px; }
+    .quote-person small { display: block; color: var(--muted); font-size: 10px; }
+
+    /* FAQ */
+    .faq-list { max-width: 800px; margin: auto; display: grid; gap: 10px; }
+    .faq-item { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; overflow: hidden; }
+    .faq-question { width: 100%; text-align: right; display: flex; justify-content: space-between; gap: 15px; align-items: center; border: 0; background: transparent; color: var(--text); padding: 19px; font-size: 13px; font-weight: 800; }
+    .faq-question i { color: var(--blue); transition: transform .2s; }
+    .faq-question[aria-expanded="true"] i { transform: rotate(45deg); }
+    .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .25s; }
+    .faq-answer > div { overflow: hidden; }
+    .faq-answer p { color: var(--muted); font-size: 12px; margin: 0; padding: 0 19px 18px; line-height: 2; }
+    .faq-item.open .faq-answer { grid-template-rows: 1fr; }
+
+    /* Contact */
+    .contact-panel {
+      display: grid; grid-template-columns: .8fr 1.2fr; gap: 40px;
+      padding: 38px; background: var(--surface); border: 1px solid var(--line);
+      border-radius: 25px; box-shadow: var(--shadow);
+    }
+    .contact-copy h2 { font-size: 30px; line-height: 1.5; margin: 17px 0 10px; }
+    .contact-copy p { font-size: 12px; color: var(--muted); }
+    .contact-info { display: grid; gap: 12px; margin-top: 25px; }
+    .contact-info > div { display: flex; align-items: center; gap: 12px; font-size: 11px; }
+    .contact-info i { color: var(--blue); width: 20px; text-align: center; }
+    .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: grid; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 11px; font-weight: 800; }
+    .field input, .field select, .field textarea {
+      width: 100%; min-width: 0; padding: 12px 13px; color: var(--text);
+      background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+      font-size: 12px; transition: border-color .2s;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--purple); outline: none; }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .field select option { background: var(--surface); color: var(--text); }
+    .form-note { font-size: 10px; color: var(--muted); margin: 0; }
+
+    /* CTA / footer */
+    .final-cta {
+      position: relative; text-align: center; overflow: hidden; padding: 55px 25px;
+      background: linear-gradient(135deg,#201844,#10142b 65%,#10233b);
+      border: 1px solid #9b83ff30; border-radius: 24px;
+    }
+    .final-cta::before, .final-cta::after { content: ""; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: #8758ff; filter: blur(100px); opacity: .18; }
+    .final-cta::before { top: -100px; right: -50px; }
+    .final-cta::after { bottom: -120px; left: -50px; background: #52baff; }
+    .final-cta > * { position: relative; z-index: 1; }
+    .final-cta h2 { font-size: clamp(26px,4vw,42px); margin: 12px 0; }
+    .final-cta p { color: #c1c2db; font-size: 12px; margin: 0 auto 23px; max-width: 550px; }
+    .footer { border-top: 1px solid var(--line); padding: 28px 0; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .footer p { margin: 0; font-size: 10px; color: var(--muted); }
+    .footer-links { display: flex; gap: 18px; font-size: 11px; color: var(--muted); }
+    .footer-links a:hover { color: var(--blue); }
+
+    /* Toast and reveal */
+    .toast-area { position: fixed; z-index: 200; left: 20px; bottom: 20px; width: min(350px,calc(100% - 40px)); display: grid; gap: 8px; }
+    .toast { display: flex; align-items: center; gap: 10px; padding: 13px 16px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); box-shadow: var(--shadow); font-size: 12px; animation: toast-in .25s ease; }
+    .toast i { color: var(--green); }
+    @keyframes toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .back-top { position: fixed; z-index: 40; bottom: 22px; right: 22px; opacity: 0; pointer-events: none; transform: translateY(10px); transition: .2s; }
+    .back-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    @media (max-width: 1000px) {
+      .nav-links { gap: 16px; }
+      .hero { gap: 20px; }
+      .hero-art { transform: scale(.94); }
+      .feature-grid { grid-template-columns: repeat(2,1fr); }
+      .workflow-grid { grid-template-columns: repeat(2,1fr); }
+      .contact-panel { gap: 25px; padding: 28px; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(100% - 30px,var(--container)); }
+      .section { padding: 70px 0; }
+      .nav { min-height: 68px; }
+      .brand-symbol { width: 37px; height: 37px; }
+      .brand-name { font-size: 18px; }
+      .menu-toggle { display: grid; }
+      .nav-links {
+        display: none; position: absolute; top: calc(100% + 7px);
+        right: 15px; left: 15px; padding: 10px;
+        border: 1px solid var(--line); background: var(--surface);
+        border-radius: 16px; box-shadow: var(--shadow);
+      }
+      .nav-links.open { display: grid; gap: 0; }
+      .nav-links a { padding: 12px; border-bottom: 1px solid var(--line); }
+      .nav-links a:last-child { border: 0; }
+      .nav-actions { gap: 5px; }
+      .icon-btn { width: 37px; height: 37px; }
+      .hero { grid-template-columns: 1fr; padding-top: 55px; padding-bottom: 45px; gap: 15px; }
+      .hero h1 { font-size: clamp(38px,9vw,58px); }
+      .hero-description { font-size: 13px; }
+      .hero-art { min-height: 390px; transform: none; }
+      .dashboard { width: min(100%,370px); }
+      .orbit-ring { width: 330px; height: 330px; }
+      .orbit-ring.ring-two { width: 270px; height: 270px; }
+      .float-one { right: 0; top: 28px; }
+      .float-two { left: 0; bottom: 20px; }
+      .metrics-grid { grid-template-columns: repeat(2,1fr); }
+      .metric:nth-child(2) { border-left: 0; }
+      .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .metric strong { font-size: 25px; }
+      .feature-grid, .pricing-grid, .testimonials { grid-template-columns: 1fr; }
+      .feature-card { min-height: auto; }
+      .workflow-grid { gap: 10px; }
+      .step { padding: 17px; }
+      .price-card.popular { order: -1; }
+      .contact-panel { grid-template-columns: 1fr; padding: 23px; gap: 25px; }
+      .contact-copy h2 { font-size: 27px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 420px) {
+      .hero-actions .btn { width: 100%; }
+      .hero-art { min-height: 345px; }
+      .dashboard { padding: 13px; }
+      .float-card { font-size: 9px; padding: 10px; }
+      .workflow-grid { grid-template-columns: 1fr 1fr; }
+      .contact-form { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .footer-links { flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="#home" class="brand" aria-label="ORBIT الصفحة الرئيسية">
+        <span class="brand-symbol"><i class="fa-solid fa-orbit"></i></span>
+        <span><span class="brand-name">ORBIT</span><span class="brand-sub">DIGITAL STUDIO</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="التنقل الرئيسي">
+        <a href="#home">الرئيسية</a>
+        <a href="#services">خدماتنا</a>
+        <a href="#process">منهجيتنا</a>
+        <a href="#pricing">الأسعار</a>
+        <a href="#faq">الأسئلة الشائعة</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="تبديل المظهر" title="تبديل المظهر"><i class="fa-solid fa-sun"></i></button>
+        <a href="#contact" class="btn btn-primary" style="padding:10px 14px">ابدأ مشروعك <i class="fa-solid fa-arrow-up-left-from-circle"></i></a>
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero" id="home">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> استوديو رقمي للأفكار الكبيرة</span>
+        <h1>أفكارك تستحق<br>مستقبلًا <span class="gradient-text">مختلفًا.</span></h1>
+        <p class="hero-description">نصمم تجارب رقمية ونبني مواقع ومنتجات تقنية تجمع بين التصميم المذهل والأداء العملي. من أول فكرة، إلى تجربة تستحق أن يتذكرها الناس.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">ناقش مشروعك <i class="fa-solid fa-arrow-left"></i></a>
+          <a class="btn btn-secondary" href="#services"><i class="fa-regular fa-circle-play"></i> اكتشف خدماتنا</a>
+        </div>
+        <div class="hero-proof">
+          <div class="avatar-stack"><span class="avatar">UX</span><span class="avatar">DEV</span><span class="avatar">AI</span><span class="avatar">✦</span></div>
+          <div><div class="proof-stars">★★★★★</div><div class="proof-text"><strong>التصميم يلتقي بالأداء</strong>كل تفصيلة لها هدف</div></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="تصور بصري للوحة تحكم رقمية">
+        <div class="orbit-glow"></div>
+        <div class="orbit-ring"></div>
+        <div class="orbit-ring ring-two"></div>
+        <div class="dashboard">
+          <div class="dashboard-top"><span class="dash-label">نظرة عامة على الأداء</span><span class="dash-dots"><i></i><i></i><i></i></span></div>
+          <div class="dash-label" style="margin-top:18px">مؤشر الأداء التوضيحي</div>
+          <div class="dash-value">84.6% <span class="dash-change"><i class="fa-solid fa-arrow-trend-up"></i> +12.8%</span></div>
+          <div class="chart" aria-label="رسم توضيحي للأداء">
+            <span style="height:28%"></span><span style="height:42%"></span><span style="height:35%"></span><span style="height:57%"></span><span style="height:48%"></span><span style="height:72%"></span><span style="height:62%"></span><span style="height:85%"></span><span style="height:68%"></span><span style="height:96%"></span><span style="height:80%"></span><span style="height:100%"></span>
+          </div>
+          <div class="dash-bottom">
+            <div class="dash-mini"><i class="fa-solid fa-bolt"></i><strong>سريع</strong><small>أداء محسّن</small></div>
+            <div class="dash-mini"><i class="fa-solid fa-shield-halved"></i><strong>آمن</strong><small>تجربة موثوقة</small></div>
+          </div>
+        </div>
+        <div class="float-card float-one"><i class="fa-solid fa-circle-check"></i> تصميم متجاوب</div>
+        <div class="float-card float-two"><i class="fa-solid fa-wand-magic-sparkles"></i> تفاصيل تصنع الفرق</div>
+      </div>
+    </section>
+
+    <section class="metrics">
+      <div class="container metrics-grid">
+        <div class="metric"><strong><span class="counter" data-target="100">0</span><span class="gradient-text">%</span></strong><span>اهتمام بالتفاصيل</span></div>
+        <div class="metric"><strong><span class="counter" data-target="24">0</span><span class="gradient-text">/7</span></strong><span>وصول إلى موقعك</span></div>
+        <div class="metric"><strong><span class="counter" data-target="3">0</span><span class="gradient-text">×</span></strong><span>تفكير في تجربة المستخدم</span></div>
+        <div class="metric"><strong><span class="counter" data-target="1">0</span></strong><span>رؤية متكاملة لكل مشروع</span></div>
+      </div>
+    </section>
+
+    <section class="section container" id="services">
+      <div class="section-heading reveal">
+        <span class="eyebrow">WHAT WE DO</span>
+        <h2>كل ما تحتاجه لبناء<br><span class="gradient-text">حضور رقمي قوي.</span></h2>
+        <p>من الواجهة الأولى وحتى التفاصيل الصغيرة، نصمم تجربة واضحة وسريعة ومناسبة لجمهورك.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card reveal"><div class="feature-icon"><i class="fa-solid fa-code"></i></div><h3>تطوير مواقع الويب</h3><p>واجهات حديثة وسريعة ومتجاوبة، مع بنية واضحة يسهل تطويرها وصيانتها.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><i class="fa-solid fa-pen-ruler"></i></div><h3>تصميم UI/UX</h3><p>تصميم يضع المستخدم في المقدمة، ويحول التنقل بين الصفحات إلى تجربة سلسة.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><i class="fa-solid fa-mobile-screen-button"></i></div><h3>تجارب الموبايل</h3><p>واجهات تتكيف مع أحجام الشاشات المختلفة دون التضحية بالجمال أو سهولة الاستخدام.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div><h3>لوحات التحكم</h3><p>لوحات إحصائيات وبيانات تفاعلية لتنظيم المعلومات وعرضها بطريقة مفهومة.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><i class="fa-solid fa-rocket"></i></div><h3>صفحات الهبوط</h3><p>صفحات مركزة على هدف واضح، مع دعوات لاتخاذ الإجراء وتدفق بصري مدروس.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><h3>التطوير والتحسين</h3><p>تحسين الواجهات الحالية، وإصلاح مشاكل العرض، وإضافة التفاعلات والحركات المناسبة.</p></article>
+      </div>
+    </section>
+
+    <section class="section workflow" id="process">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">HOW WE WORK</span>
+          <h2>من الفكرة إلى <span class="gradient-text">الإطلاق.</span></h2>
+          <p>خطوات واضحة تساعد على تحويل المتطلبات إلى تجربة رقمية متماسكة.</p>
+        </div>
+        <div class="workflow-grid">
+          <article class="step reveal"><div class="step-number">01</div><h3>نفهم الفكرة</h3><p>نحدد هدف المشروع والجمهور والوظائف المطلوبة.</p></article>
+          <article class="step reveal"><div class="step-number">02</div><h3>نخطط ونصمم</h3><p>نرتب الصفحات والمحتوى ونبني الاتجاه البصري.</p></article>
+          <article class="step reveal"><div class="step-number">03</div><h3>نبني ونختبر</h3><p>نطور الواجهة ونجرب التفاعلات على الشاشات المختلفة.</p></article>
+          <article class="step reveal"><div class="step-number">04</div><h3>نطلق ونحسن</h3><p>نجهز الموقع للنشر ونخطط للتحسينات التالية.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="pricing">
+      <div class="section-heading reveal">
+        <span class="eyebrow">SIMPLE PRICING</span>
+        <h2>اختَر الخطة <span class="gradient-text">المناسبة.</span></h2>
+        <p>الأسعار التالية أمثلة تصميمية لتوضيح شكل قسم الأسعار، وليست عروضًا تجارية فعلية.</p>
+      </div>
+      <div class="pricing-toggle">
+        <span>شهري</span>
+        <button class="switch" id="billingToggle" role="switch" aria-checked="false" aria-label="التبديل بين الأسعار الشهرية والسنوية"><span class="switch-knob"></span></button>
+        <span>سنوي <span style="color:var(--green)">وفر 20%</span></span>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card reveal">
+          <h3>Starter</h3><p>للبداية الرقمية وصفحات التعريف البسيطة.</p>
+          <div class="price" data-month="2500" data-year="24000">٢٬٥٠٠ <small>ج.م / مرة</small></div>
+          <ul><li><i class="fa-solid fa-check"></i> صفحة هبوط واحدة</li><li><i class="fa-solid fa-check"></i> تصميم متجاوب</li><li><i class="fa-solid fa-check"></i> نموذج تواصل تجريبي</li><li><i class="fa-solid fa-check"></i> مراجعة أساسية</li></ul>
+          <button class="btn btn-secondary choose-plan" data-plan="Starter">اختر الخطة</button>
+        </article>
+        <article class="price-card popular reveal">
+          <span class="popular-label"><i class="fa-solid fa-star"></i> الأكثر شمولًا</span>
+          <h3>Professional</h3><p>للشركات الصغيرة والمشاريع التي تحتاج تجربة متكاملة.</p>
+          <div class="price" data-month="6500" data-year="62400">٦٬٥٠٠ <small>ج.م / مرة</small></div>
+          <ul><li><i class="fa-solid fa-check"></i> حتى 5 صفحات</li><li><i class="fa-solid fa-check"></i> تصميم مخصص</li><li><i class="fa-solid fa-check"></i> تفاعلات وحركات</li><li><i class="fa-solid fa-check"></i> تحسين أساسي لمحركات البحث</li><li><i class="fa-solid fa-check"></i> اختبار على الأجهزة</li></ul>
+          <button class="btn btn-primary choose-plan" data-plan="Professional">اختر الخطة <i class="fa-solid fa-arrow-left"></i></button>
+        </article>
+        <article class="price-card reveal">
+          <h3>Custom</h3><p>للمشاريع التي تحتاج وظائف خاصة ونطاقًا أوسع.</p>
+          <div class="price"><span style="font-size:25px">حسب المتطلبات</span></div>
+          <ul><li><i class="fa-solid fa-check"></i> نطاق عمل مخصص</li><li><i class="fa-solid fa-check"></i> تخطيط للوظائف المطلوبة</li><li><i class="fa-solid fa-check"></i> إمكانية ربط Backend</li><li><i class="fa-solid fa-check"></i> تقدير سعر بعد المناقشة</li></ul>
+          <button class="btn btn-secondary choose-plan" data-plan="Custom">ناقش مشروعك</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section workflow">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">DESIGN PRINCIPLES</span>
+          <h2>مش مجرد شكل حلو،<br><span class="gradient-text">تجربة محسوبة.</span></h2>
+        </div>
+        <div class="testimonials">
+          <article class="quote-card reveal"><div class="quote-stars">★★★★★</div><blockquote>«واجهة مرتبة بتوضح المعلومات المهمة من أول نظرة. الهدف إن المستخدم يوصل للي محتاجه بسهولة.»</blockquote><div class="quote-person"><div class="quote-avatar">UX</div><div><strong>تجربة المستخدم</strong><small>مبدأ تصميم</small></div></div></article>
+          <article class="quote-card reveal"><div class="quote-stars">★★★★★</div><blockquote>«الحركات البسيطة والتباين الجيد ممكن يفرقوا في جودة التجربة، بشرط إنهم ما يبطّئوش الموقع.»</blockquote><div class="quote-person"><div class="quote-avatar">UI</div><div><strong>التصميم البصري</strong><small>مبدأ تصميم</small></div></div></article>
+          <article class="quote-card reveal"><div class="quote-stars">★★★★★</div><blockquote>«الواجهة لازم تشتغل على الموبايل والكمبيوتر، وتراعي سهولة الوصول وسرعة التحميل.»</blockquote><div class="quote-person"><div class="quote-avatar">DEV</div><div><strong>التطوير العملي</strong><small>مبدأ تطوير</small></div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="faq">
+      <div class="section-heading reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>أسئلة <span class="gradient-text">متكررة.</span></h2>
+        <p>إجابات مختصرة عن آلية العمل والخدمات المعروضة في هذا النموذج.</p>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item reveal"><button class="faq-question" aria-expanded="false"><span>هل يمكن تعديل التصميم ليتناسب مع علامتي التجارية؟</span><i class="fa-solid fa-plus"></i></button><div class="faq-answer"><div><p>نعم، يمكن تغيير الألوان والخطوط والشعار والصور والمحتوى بما يناسب الهوية المطلوبة.</p></div></div></article>
+        <article class="faq-item reveal"><button class="faq-question" aria-expanded="false"><span>هل الموقع متجاوب مع الموبايل؟</span><i class="fa-solid fa-plus"></i></button><div class="faq-answer"><div><p>نعم، هذا النموذج يتضمن قواعد CSS لأحجام الشاشات المختلفة، مع قائمة موبايل وتخطيطات تتغير حسب العرض.</p></div></div></article>
+        <article class="faq-item reveal"><button class="faq-question" aria-expanded="false"><span>هل نموذج التواصل يرسل رسالة فعلية؟</span><i class="fa-solid fa-plus"></i></button><div class="faq-answer"><div><p>لا، النموذج الحالي يتحقق من المدخلات ويعرض تأكيدًا تجريبيًا فقط. إرسال الرسائل يحتاج خدمة Backend أو مزود نماذج خارجي.</p></div></div></article>
+        <article class="faq-item reveal"><button class="faq-question" aria-expanded="false"><span>هل الأسعار المعروضة حقيقية؟</span><i class="fa-solid fa-plus"></i></button><div class="faq-answer"><div><p>لا، الأسعار أمثلة توضيحية لتصميم قسم الخطط. يجب تحديد الأسعار الفعلية ونطاق العمل قبل تقديم عروض للعملاء.</p></div></div></article>
+        <article class="faq-item reveal"><button class="faq-question" aria-expanded="false"><span>هل يمكن ربط الموقع بقاعدة بيانات؟</span><i class="fa-solid fa-plus"></i></button><div class="faq-answer"><div><p>يمكن تطويره لاحقًا وربطه بخادم وقاعدة بيانات وتسجيل دخول وخدمات أخرى حسب متطلبات المشروع.</p></div></div></article>
+      </div>
+    </section>
+
+    <section class="section container" id="contact">
+      <div class="contact-panel reveal">
+        <div class="contact-copy">
+          <span class="eyebrow">LET'S TALK</span>
+          <h2>عندك فكرة؟<br><span class="gradient-text">خلينا نبدأ.</span></h2>
+          <p>احكيلنا عن مشروعك، نوع الموقع اللي محتاجه، وأهم الوظائف المطلوبة. النموذج هنا تجريبي، وجاهز للربط بخدمة إرسال فعلية.</p>
+          <div class="contact-info">
+            <div><i class="fa-solid fa-envelope"></i><span>نموذج تواصل تجريبي</span></div>
+            <div><i class="fa-solid fa-clock"></i><span>خطوات واضحة ونطاق عمل محدد</span></div>
+            <div><i class="fa-solid fa-laptop-code"></i><span>مواقع وواجهات رقمية</span></div>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="field"><label for="name">الاسم *</label><input id="name" name="name" required minlength="2" maxlength="80" autocomplete="name" placeholder="اسمك"></div>
+          <div class="field"><label for="email">البريد الإلكتروني *</label><input id="email" name="email" type="email" required maxlength="150" autocomplete="email" placeholder="name@example.com"></div>
+          <div class="field full"><label for="service">الخدمة المطلوبة *</label><select id="service" name="service" required><option value="">اختر الخدمة</option><option>تطوير موقع ويب</option><option>تصميم UI/UX</option><option>صفحة هبوط</option><option>لوحة تحكم</option><option>تطوير وتحسين موقع قائم</option><option>خدمة أخرى</option></select></div>
+          <div class="field full"><label for="message">تفاصيل المشروع *</label><textarea id="message" name="message" required minlength="10" maxlength="2000" placeholder="احكيلنا عن فكرتك وأهدافك..."></textarea></div>
+          <div class="field full"><p class="form-note">لا تُرسل هذه البيانات إلى خادم في النسخة الحالية. استخدم زر التنزيل للاحتفاظ بنسخة من طلبك.</p><button class="btn btn-primary btn-block" type="submit">تجهيز طلب التواصل <i class="fa-solid fa-arrow-left"></i></button></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom:75px">
+      <div class="final-cta reveal">
+        <span class="eyebrow">YOUR NEXT CHAPTER</span>
+        <h2>جاهز تحوّل فكرتك إلى <span class="gradient-text">واقع رقمي؟</span></h2>
+        <p>ابدأ بتحديد احتياجات مشروعك، وبعدها نقدر نطوّر التصميم إلى منتج حقيقي متكامل.</p>
+        <a href="#contact" class="btn btn-primary">ابدأ من هنا <i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="#home" class="brand"><span class="brand-symbol"><i class="fa-solid fa-orbit"></i></span><span><span class="brand-name">ORBIT</span><span class="brand-sub">DIGITAL STUDIO</span></span></a>
+      <p>© <span id="year"></span> ORBIT. نموذج واجهة أمامية قابل للتطوير.</p>
+      <div class="footer-links"><a href="#services">الخدمات</a><a href="#pricing">الأسعار</a><a href="#contact">التواصل</a></div>
+    </div>
+  </footer>
+
+  <button class="icon-btn back-top" id="backTop" aria-label="العودة للأعلى" title="العودة للأعلى"><i class="fa-solid fa-arrow-up"></i></button>
+  <div class="toast-area" id="toastArea" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    const $ = (selector, root=document) => root.querySelector(selector);
+    const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
+
+    function toast(message, icon="fa-circle-check") {
+      const node = document.createElement("div");
+      node.className = "toast";
+      const ico = document.createElement("i");
+      ico.className = "fa-solid " + icon;
+      const text = document.createElement("span");
+      text.textContent = message;
+      node.append(ico,text);
+      $("#toastArea").append(node);
+      setTimeout(() => node.remove(), 3500);
+    }
+
+    // Theme: حفظ الاختيار محليًا.
+    const savedTheme = localStorage.getItem("orbit-theme");
+    if (savedTheme === "light") document.body.classList.add("light");
+
+    function updateThemeButton() {
+      const light = document.body.classList.contains("light");
+      $("#themeToggle").innerHTML = light
+        ? '<i class="fa-solid fa-moon"></i>'
+        : '<i class="fa-solid fa-sun"></i>';
+      $("#themeToggle").setAttribute("aria-label",light?"تفعيل المظهر الداكن":"تفعيل المظهر الفاتح");
+      document.querySelector('meta[name="theme-color"]').content = light ? "#f7f7fc" : "#080914";
+    }
+    updateThemeButton();
+
+    $("#themeToggle").addEventListener("click",()=>{
+      document.body.classList.toggle("light");
+      const theme = document.body.classList.contains("light") ? "light" : "dark";
+      try { localStorage.setItem("orbit-theme",theme); } catch {}
+      updateThemeButton();
+      toast(theme==="light"?"تم تفعيل المظهر الفاتح":"تم تفعيل المظهر الداكن");
+    });
+
+    // Mobile navigation.
+    $("#menuToggle").addEventListener("click",()=>{
+      const opened = $("#navLinks").classList.toggle("open");
+      $("#menuToggle").setAttribute("aria-expanded",String(opened));
+      $("#menuToggle").innerHTML = opened
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+    $$("#navLinks a").forEach(link=>link.addEventListener("click",()=>{
+      $("#navLinks").classList.remove("open");
+      $("#menuToggle").setAttribute("aria-expanded","false");
+      $("#menuToggle").innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }));
+    document.addEventListener("keydown",event=>{
+      if(event.key==="Escape"){
+        $("#navLinks").classList.remove("open");
+        $("#menuToggle").setAttribute("aria-expanded","false");
+        $("#menuToggle").innerHTML = '<i class="fa-solid fa-bars"></i>';
+      }
+    });
+
+    // Reveal animations, with a fallback for older browsers.
+    const revealItems = $$(".reveal");
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },{threshold:.12});
+      revealItems.forEach(el=>revealObserver.observe(el));
+    } else {
+      revealItems.forEach(el=>el.classList.add("visible"));
+    }
+
+    // Counter animation: illustrative UI values, not business statistics.
+    let countersStarted = false;
+    function animateCounters() {
+      if(countersStarted) return;
+      countersStarted = true;
+      $$(".counter").forEach(counter=>{
+        const target = Number(counter.dataset.target);
+        const start = performance.now();
+        const duration = 1000;
+        function frame(now){
+          const progress = Math.min((now-start)/duration,1);
+          const eased = 1-Math.pow(1-progress,3);
+          counter.textContent = Math.round(target*eased).toLocaleString("ar-EG");
+          if(progress<1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+    const metrics = $(".metrics");
+    if ("IntersectionObserver" in window) {
+      const counterObserver = new IntersectionObserver(entries=>{
+        if(entries.some(e=>e.isIntersecting)){
+          animateCounters();
+          counterObserver.disconnect();
+        }
+      },{threshold:.2});
+      counterObserver.observe(metrics);
+    } else animateCounters();
+
+    // Pricing switch changes the displayed example prices.
+    let annualBilling = false;
+    const priceFormat = number => Number(number).toLocaleString("ar-EG");
+    $("#billingToggle").addEventListener("click",()=>{
+      annualBilling = !annualBilling;
+      $("#billingToggle").setAttribute("aria-checked",String(annualBilling));
+      $$(".price[data-month]").forEach(el=>{
+        const amount = Number(el.dataset[annualBilling?"year":"month"]);
+        el.innerHTML = priceFormat(amount) + ' <small>ج.م / ' + (annualBilling?"سنة":"مرة") + '</small>';
+      });
+      toast(annualBilling?"تم عرض الأسعار السنوية التوضيحية":"تم عرض الأسعار الأساسية التوضيحية");
+    });
+
+    // FAQ accordion: one open at a time.
+    $$(".faq-question").forEach(button=>{
+      button.addEventListener("click",()=>{
+        const item = button.closest(".faq-item");
+        const wasOpen = item.classList.contains("open");
+        $$(".faq-item").forEach(other=>{
+          other.classList.remove("open");
+          $(".faq-question",other).setAttribute("aria-expanded","false");
+        });
+        if(!wasOpen){
+          item.classList.add("open");
+          button.setAttribute("aria-expanded","true");
+        }
+      });
+    });
+
+    // Pricing cards prefill the contact form and scroll to it.
+    $$(".choose-plan").forEach(button=>{
+      button.addEventListener("click",()=>{
+        const plan = button.dataset.plan;
+        $("#service").value = plan==="Custom" ? "خدمة أخرى" : "تطوير موقع ويب";
+        const extra = `الخطة التي أهتم بها: ${plan}. الفوترة المعروضة: ${annualBilling?"سنوية":"أساسية"}.`;
+        $("#message").value = extra + "\n\nتفاصيل المشروع: ";
+        $("#contact").scrollIntoView({behavior:"smooth"});
+        setTimeout(()=>$("#message").focus({preventScroll:true}),450);
+        toast("تم تجهيز نموذج التواصل بالخطة المختارة.");
+      });
+    });
+
+    // Contact form: validate and download a JSON brief locally.
+    $("#contactForm").addEventListener("submit",event=>{
+      event.preventDefault();
+      const form = event.currentTarget;
+      if(!form.reportValidity()) return;
+
+      const brief = {
+        project:"ORBIT Landing — Contact Brief",
+        createdAt:new Date().toISOString(),
+        name:$("#name").value.trim(),
+        email:$("#email").value.trim(),
+        service:$("#service").value,
+        message:$("#message").value.trim(),
+        note:"نموذج تجريبي؛ لم يتم إرسال البيانات إلى خادم."
+      };
+      if(brief.name.length<2 || brief.message.length<10){
+        toast("راجع الاسم وتفاصيل المشروع.", "fa-triangle-exclamation");
+        return;
+      }
+
+      const blob = new Blob([JSON.stringify(brief,null,2)],{type:"application/json;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href=url;
+      link.download="orbit-project-brief.json";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+      toast("تم تنزيل ملخص المشروع بصيغة JSON.");
+    });
+
+    // Back-to-top button.
+    const backTop = $("#backTop");
+    window.addEventListener("scroll",()=>{
+      backTop.classList.toggle("show",window.scrollY>500);
+    },{passive:true});
+    backTop.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+    // Active navigation link.
+    const sections = $$("main section[id]");
+    if ("IntersectionObserver" in window) {
+      const sectionObserver = new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(!entry.isIntersecting) return;
+          $$("#navLinks a").forEach(link=>{
+            const matches = link.getAttribute("href")==="#"+entry.target.id;
+            link.classList.toggle("active",matches);
+          });
+        });
+      },{rootMargin:"-25% 0px -60% 0px"});
+      sections.forEach(section=>sectionObserver.observe(section));
+    }
+
+    $("#year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
